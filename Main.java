@@ -123,7 +123,8 @@ public class Main extends Application
          }
       }
    }
-   
+   int lastcgridx = 0;
+   int lastcgridy = 0;
    boolean up,down,left,right; //link to the keys
    boolean lose = false;
    boolean newHighScore = false;
@@ -187,7 +188,6 @@ public class Main extends Application
             {
                lose = true; //doesnt draw the player
                mines.remove(i); //removes the mine
-               ta.stop(); //stops the animation
             }
          }
          
@@ -207,18 +207,17 @@ public class Main extends Application
          cposy.add(cgridy);
          
          //declaring the lastgrids of the player
-         int lastcgridx = 0;
-         int lastcgridy = 0;
+         
          int possx =0;
          int possy =0;
          
          //last grids of thePlayer
-         possx = cposx.get(cposx.size()-1);
+         /*possx = cposx.get(cposx.size()-1);
          possy = cposy.get(cposy.size()-1);
          if (cgridx != possx)
             lastcgridx = possx;
          if (cgridy != possy)   
-            lastcgridy = possy;
+            lastcgridy = possy;*/
          
          //runs if thePlayer has moved
          if (cgridx != lastcgridx || cgridy != lastcgridy) 
@@ -241,18 +240,21 @@ public class Main extends Application
             //top
             for(int i =0; i <10; i++)
             {
-               y = cgridy - 4;
+               
+               y = cgridy - 5;
                createNewMines((cgridx+i),y); //draws the mines from thePlayer position to the right end of the screen
                createNewMines((cgridx-i),y); //draws the mines from thePlayer position to the left end of the screen
             }
             //bottom
             for(int i =0; i <10; i++)
             {
-               y = cgridy + 3;
+               y = cgridy + 5;
                createNewMines((cgridx+i),y);
                createNewMines((cgridx-i),y);
             }
          }
+         lastcgridx = cgridx;
+         lastcgridy = cgridy;
          
          //goes through the mines added in the array and draws them
          for (int i =0; i < mines.size(); i++)
@@ -336,7 +338,7 @@ public class Main extends Application
       {
          float chance = rand.nextFloat(2);
          
-         if(chance < 0.15) // 1/2 the chance bc the method is called twice for each side
+         if(chance < 0.3) // 1/2 the chance bc the method is called twice for each side
          {
             //create mine at random pos in square
             posx = (xgrid*100) + (rand.nextFloat() * 100);
